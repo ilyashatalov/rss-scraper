@@ -7,7 +7,7 @@ from app import db
 
 @dataclass
 class Item(db.Model, SerializerMixin):
-    serialize_rules = ('-feed_id', '-remote_id')
+    serialize_rules = ('-remote_id', )
 
     feed_id = db.Column(db.Integer, db.ForeignKey('feed.id'), nullable=False)
     id = db.Column("id", db.Integer, primary_key=True)

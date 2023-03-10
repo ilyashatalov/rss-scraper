@@ -284,6 +284,8 @@ def get_feed_items(feed_id, unread=None):
                      type: boolean
                  last_updated:
                      type: string
+                 feed_id:
+                     type: integer
      responses:
          200:
              description: List of feed items
