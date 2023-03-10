@@ -24,7 +24,7 @@ def update_feed(feed_id):
         3) Compare feed items by remote id and if there are any new items - adds it to our app
     """
     feed = Feed.query.filter_by(id=feed_id).one()
-    app.logger.debug(f"Trying to parse feed {feed.name} with url {feed.url}")
+    app.logger.info(f"Trying to parse feed {feed.name} with url {feed.url}")
     feedparsed = feedparser.parse(feed.url)
     if "bozo_exception" in feedparsed.keys():
         raise Exception(feedparsed.bozo_exception)
@@ -33,7 +33,7 @@ def update_feed(feed_id):
     datetime_str = '%a, %d %b %Y %H:%M:%S %Z'
     feedparsed_date_parsed = datetime.strptime(feedparsed.updated, datetime_str)
     if feed.last_updated and feedparsed_date_parsed < feed.last_updated:
-        app.logger.debug(f"Seems feed {feed.name} hasn't new items from last update. Skipping...")
+        app.logger.info(f"Seems feed {feed.name} hasn't new items from last update. Skipping...")
         return True
 
     # retrieve the remote_id field of all users feeds values() method
@@ -50,7 +50,7 @@ def update_feed(feed_id):
         app.logger.info(f"Feed {feed.name} was successfully updated")
         feed.touch()
     else:
-        app.logger.debug(f"No new items in Feed {feed.name} was founded")
+        app.logger.info(f"No new items in Feed {feed.name} was founded")
     return True
 
 

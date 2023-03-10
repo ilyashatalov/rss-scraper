@@ -34,10 +34,13 @@ class Config:
 
     def __parse(self):
         for key in self.__defaults.keys():
-            if key in self.__integer_keys and key in os.environ:
-                value = int(os.environ.get(key))
+            if key in self.__integer_keys and key in os.environ and os.environ[key]:
+                try:
+                    value = int(os.environ.get(key))
+                except ValueError:
+                    value = self.__defaults[key]
                 self.__config[key] = value
-            elif key in self.__boolean_keys and key in os.environ:
+            elif key in self.__boolean_keys and key in os.environ and os.environ:
                 value = os.getenv(key, 'False').lower() in ('true', '1', 't')
                 self.__config[key] = value
             else:
