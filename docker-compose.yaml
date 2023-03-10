@@ -7,57 +7,67 @@ services:
     image: rssscraper:0.1
 
   app:
+    restart: always
     image: rssscraper:0.1
     ports:
       - "80:8000"
     environment:
-      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:po6Ughai@db:5432/rssscraper
+      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:rssapp@db:5432/rssscraper
     depends_on:
-      - db
-      - build
-
+      db:
+        condition: service_healthy
 
   celery-worker:
     image: rssscraper:0.1
     command: celery  -A worker.celery worker
+    restart: always
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
-      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:po6Ughai@db:5432/rssscraper
+      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:rssapp@db:5432/rssscraper
     depends_on:
-      - app
-      - db
-      - redis
-      - build
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   celery-beat:
     image: rssscraper:0.1
     command: celery  -A worker.celery beat
+    restart: always
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
-      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:po6Ughai@db:5432/rssscraper
+      SQLALCHEMY_DATABASE_URI: postgresql://rssapp:rssapp@db:5432/rssscraper
     depends_on:
-      - app
-      - db
-      - redis
-      - build
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   db:
     image: postgres:14.1-alpine
     restart: always
     environment:
       - POSTGRES_USER=rssapp
-      - POSTGRES_PASSWORD=po6Ughai
+      - POSTGRES_PASSWORD=rssapp
       - POSTGRES_DB=rssscraper
-    ports:
-      - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
 
   redis:
     image: redis
+    restart: always
     ports:
       - '6379:6379'
-
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
 
 
 volumes:
