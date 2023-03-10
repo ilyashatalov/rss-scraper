@@ -25,6 +25,7 @@ This repo provides quick start docker-compose file for hassle-free usage.
    ```bash
    docker-compose up -d
    ```
+*Don't mind that app and celery services will be errored at start of command. They will start as soon as the container is builded*
 
 It will:
 1) Pull Redis and PostgreSQL images from the docker hub.
@@ -212,6 +213,10 @@ vim .env
 Start app in dev mode
 ```bsah
 flask run --reload
+```
+Start celery worker and beat
+```bash
+celery  -A worker.celery worker -B -l debug
 ```
 ### Tests
 Take care,  database will be **cleaned up** after every test. So, it's better to use another database for test runs. It's simple with dotenv configuration, just pass it as the environment variable (it will be prioritized). But don't forget to create it before
