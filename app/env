@@ -1,0 +1,2 @@
+SQLALCHEMY_DATABASE_URI=postgresql://rssapp:rssapp@localhost:5432/rssscraper
+FLASK_DEBUG=1
