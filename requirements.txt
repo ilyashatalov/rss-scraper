@@ -2,14 +2,12 @@ feedparser==6.0.10
 flasgger==0.9.5
 Flask==2.2.3
 flask_sqlalchemy==3.0.3
-pytest==7.2.2
 python-dotenv==1.0.0
 SQLAlchemy==2.0.4
 SQLAlchemy_serializer==1.4.1
 webargs==8.2.0
 app==0.0.1
 celery==5.2.7
-pytest==7.2.2
 python-dotenv==1.0.0
 psycopg2==2.9.5
 redis==4.5.1
