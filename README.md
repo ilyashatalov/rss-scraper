@@ -8,6 +8,11 @@ Also, there is a notification service that supports any kind of notification typ
 
 Technically, it's a flask application with a PostgreSQL database and celery+redis broker for asynchronous tasks.
 
+Please keep in mind some points of my realisation that I made to avoid wasting time because, as I said before, I have full-time work now:
+1) I didn't represent all fields of feeds and items; Model expanding is easy but needs time
+2) I didn't cover all endpoints with tests but covered some of them to give you an understanding of my approach
+3) I didn't have time to finish the test of the background update service, but the service worked well. If it will be a decisive point, I can do it later. 
+
 ## Quick Start (Production mode, docker environment)
 
 This repo provides quick start docker-compose file for hassle-free usage.
