@@ -1,4 +1,4 @@
-# RSS Scraper
+# rss-scraper
 RSS Scraper is a test application n which saves RSS feeds to a database and lets a user view and manage feeds they've added to the system through an API.
 
 ## Description
