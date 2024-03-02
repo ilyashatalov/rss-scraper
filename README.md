@@ -1,7 +1,7 @@
 # RSS Scraper
-## Description
 RSS Scraper is a test application n which saves RSS feeds to a database and lets a user view and manage feeds they've added to the system through an API.
 
+## Description
 Feeds (and feed items) updates in a background task, asynchronously, periodically and in an unattended manner.
 
 Also, there is a notification service that supports any kind of notification type (can be extended, only email supports now)
